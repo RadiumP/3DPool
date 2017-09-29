@@ -79,8 +79,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ballScript.cs" />
+    <Compile Include="Assets\Scripts\camCtrlManager.cs" />
     <Compile Include="Assets\Scripts\camMoveScript.cs" />
     <Compile Include="Assets\Scripts\cueBallScript.cs" />
+    <Compile Include="Assets\Scripts\shotCtrlManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
