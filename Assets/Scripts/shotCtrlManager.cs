@@ -7,7 +7,7 @@ public class shotCtrlManager : MonoBehaviour {
     public GameObject laserPrefab;
     public GameObject cueBall;
 
-
+    private Rigidbody cueBallRb;
     private GameObject laser;
     private Transform laserTransform;
     private Vector3 hitPoint;
@@ -17,19 +17,25 @@ public class shotCtrlManager : MonoBehaviour {
 	void Start () {
         laser = Instantiate(laserPrefab);
         laserTransform = laser.transform;
-        
-	}
+        cueBallRb = cueBall.GetComponent<Rigidbody>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
         RaycastHit hit;
         direction = cueBall.GetComponent<cueBallScript>().shotDirection;
-        Debug.Log(direction);
-        if(Physics.Raycast(cueBall.transform.position, direction, out hit, 500))
+        //Debug.Log(direction);
+        if (cueBallRb.velocity.magnitude < 0.1)
         {
-            hitPoint = hit.point;
-            ShowLaser(hit);
+            if (Physics.Raycast(cueBall.transform.position, direction, out hit, 500))
+            {
+                hitPoint = hit.point;
+                ShowLaser(hit);
+            }
         }
+        else laser.SetActive(false);
+        
 	}
 
     private void ShowLaser(RaycastHit hit)

@@ -27,6 +27,6 @@ public class ballScript : MonoBehaviour {
         }
 
 
-        Debug.Log("V: " + rb.velocity);
+        //Debug.Log("V: " + rb.velocity);
     }
 }

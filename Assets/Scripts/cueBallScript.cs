@@ -8,7 +8,7 @@ public class cueBallScript : MonoBehaviour {
     public Vector3 shotDirection;
     public Camera topCam;
 
-
+    private float angle;
     private Rigidbody rb;
 
     private Vector3 mouseStartPos;
@@ -20,32 +20,54 @@ public class cueBallScript : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
 
         ballScreenPos = topCam.WorldToScreenPoint(rb.transform.position);
-        mouseStartPos = Input.mousePosition - ballScreenPos;
+       
 
         shotDirection = transform.right;
-        Debug.Log(rb.angularDrag);
+        //Debug.Log(rb.angularDrag);
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         Vector3 mouseCurPos = Input.mousePosition - ballScreenPos;
-        Vector3 mouseDelta = mouseCurPos - mouseStartPos;
-        
+
+        Vector3 startDir = Vector3.right;
+        startDir.Normalize();
 
         //if (mouseDelta.sqrMagnitude < 0.1f)
         //{
         //    return;
         //}
 
-        float angle = Mathf.Acos((Vector3.Dot(mouseCurPos, Vector3.right)) / (Vector3.right.magnitude * mouseCurPos.magnitude)) * Mathf.Rad2Deg;
+        //float angle = Mathf.Acos((Vector3.Dot(mouseCurPos, startDir)) / (startDir.magnitude * mouseCurPos.magnitude)) * Mathf.Rad2Deg;
         //if (angle < 0f) angle += 360f;
-        Debug.Log(angle);
+        //Debug.Log(mouseCurPos);
 
-        mouseStartPos = mouseCurPos;
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            angle -= 1.0f;
+        }
 
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            angle += 1.0f;
+        }
 
-        shotDirection = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.right;
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            angle -= 0.2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            angle += 0.2f;
+        }
+
+        shotDirection = Quaternion.AngleAxis(angle, Vector3.up) * startDir;
+        
+        
+
+        Debug.Log(shotDirection);
         shotDirection.Normalize();
 
 		if(Input.GetKey(KeyCode.Space))
